@@ -9,29 +9,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Created by zou on 2016/5/11.
  */
-public class TimePickDialogUtil implements DatePicker.OnDateChangedListener,
-        TimePicker.OnTimeChangedListener {
-    private DatePicker datePicker;
+public class TimePickDialogUtil implements TimePicker.OnTimeChangedListener {
     private TimePicker timePicker;
     private AlertDialog ad;
-    private String dateTime;
+
+
+
+    private String Time_string="jjjjj";
     private String initDateTime;
     private Activity activity;
 
-    /**
-     * 日期时间弹出选择框构造函数
-     *
-     * @param activity
-     *            ：调用的父activity
-     * @param initDateTime
-     *            初始日期时间值，作为弹出窗口的标题和日期时间初始值
-     */
     public TimePickDialogUtil(Activity activity, String initDateTime) {
         this.activity = activity;
         this.initDateTime = initDateTime;
@@ -50,7 +42,7 @@ public class TimePickDialogUtil implements DatePicker.OnDateChangedListener,
                 .setView(TimeLayout)
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        inputDate.setText(dateTime);
+                        inputDate.setText(Time_string);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -59,9 +51,14 @@ public class TimePickDialogUtil implements DatePicker.OnDateChangedListener,
                     }
                 }).show();
 
-        onDateChanged(null, 0, 0, 0);
         return ad;
-    }
+        }
+
+        public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+            Time_string =hourOfDay+":"+minute;
+            ad.setTitle(Time_string);
+            Log.d("5555555", Time_string);
+        }
 
     public void init( TimePicker timePicker) {
         Calendar calendar = Calendar.getInstance();
@@ -78,36 +75,7 @@ public class TimePickDialogUtil implements DatePicker.OnDateChangedListener,
         timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
     }
 
-    /**
-     * 弹出日期时间选择框方法
-     *
-     * @param inputDate
-     *            :为需要设置的日期时间文本编辑框
-     * @return
-     */
 
-
-    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-        onDateChanged(null, 0, 0, 0);
-    }
-
-    public void onDateChanged(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-        // 获得日历实例
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(timePicker.getCurrentHour(), timePicker.getCurrentMinute(),datePicker.getDayOfMonth());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        dateTime = sdf.format(calendar.getTime());
-        ad.setTitle(dateTime);
-        getTime(dateTime);
-        Log.d("556565", dateTime);
-    }
-
-    public String getTime(String TIME){
-
-        return  TIME;
-    }
 
     /**
      * 实现将初始日期时间2012年07月02日 16:45 拆分成年 月 日 时 分 秒,并赋值给calendar

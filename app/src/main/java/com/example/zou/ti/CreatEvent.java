@@ -24,8 +24,7 @@ public class CreatEvent extends Activity{
     private EditText Content;
 
     private String Content_text;
-    private String datatime;
-
+    private static String datatime;
     private Button button_creat;
     private  Button button_cancle;
     DatabaseHelper databaseHelper;
@@ -75,15 +74,13 @@ public class CreatEvent extends Activity{
                             CreatEvent.this, initStartDateTime);
                     dateTimePicKDialog.dateTimePicKDialog(EditDate);
                 } else {
-
                 }
             }
         });
-
         button_creat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datatime= EditDate.getText().toString();
+                datatime=EditTime.getText().toString()+ "  "+EditDate.getText().toString();
                 Content_text = Content.getText().toString();
                 Log.d("55555", Content_text);
                 Log.d("55555",datatime);

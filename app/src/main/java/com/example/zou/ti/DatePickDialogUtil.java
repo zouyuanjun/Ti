@@ -15,14 +15,11 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import android.widget.TimePicker.OnTimeChangedListener;
 
-public class DatePickDialogUtil implements OnDateChangedListener,
-        OnTimeChangedListener {
+public class DatePickDialogUtil implements OnDateChangedListener {
     private DatePicker datePicker;
-    private TimePicker timePicker;
     private AlertDialog ad;
-    private String dateTime;
+    private String Data_String;
     private String initDateTime;
     private Activity activity;
 
@@ -42,18 +39,14 @@ public class DatePickDialogUtil implements OnDateChangedListener,
     public AlertDialog dateTimePicKDialog(final EditText inputDate) {
         LinearLayout dateTimeLayout = (LinearLayout) activity
                 .getLayoutInflater().inflate(R.layout.datepick, null);
-        datePicker = (DatePicker) dateTimeLayout.findViewById(R.id.datepicker);
-        timePicker = (TimePicker) dateTimeLayout.findViewById(R.id.timepicker);
-        init(datePicker, timePicker);
-        timePicker.setIs24HourView(true);
-        timePicker.setOnTimeChangedListener(this);
-
+        datePicker= (DatePicker) dateTimeLayout.findViewById(R.id.datepicker);
+        init(datePicker);
         ad = new AlertDialog.Builder(activity)
                 .setTitle(initDateTime)
                 .setView(dateTimeLayout)
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        inputDate.setText(dateTime);
+                        inputDate.setText(Data_String);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -61,12 +54,10 @@ public class DatePickDialogUtil implements OnDateChangedListener,
                         inputDate.setText("");
                     }
                 }).show();
-
-        onDateChanged(null, 0, 0, 0);
         return ad;
     }
 
-    public void init(DatePicker datePicker, TimePicker timePicker) {
+    public void init(DatePicker datePicker) {
         Calendar calendar = Calendar.getInstance();
         if (!(null == initDateTime || "".equals(initDateTime))) {
             calendar = this.getCalendarByInintData(initDateTime);
@@ -77,38 +68,20 @@ public class DatePickDialogUtil implements OnDateChangedListener,
                     + calendar.get(Calendar.HOUR_OF_DAY) + ":"
                     + calendar.get(Calendar.MINUTE);
         }
-
-        datePicker.init(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH), this);
-        timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-        timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
+        datePicker.init(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),this);
     }
 
-    /**
-     * 弹出日期时间选择框方法
-     *
-     * @param inputDate
-     *            :为需要设置的日期时间文本编辑框
-     * @return
-     */
 
-
-    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-        onDateChanged(null, 0, 0, 0);
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Data_String=dayOfMonth+"日";
+    }
+    public String getDate(){
+        String DATE=null;
+        DATE=this.Data_String;
+        return  DATE;
     }
 
-    public void onDateChanged(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-        // 获得日历实例
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(timePicker.getCurrentHour(), timePicker.getCurrentMinute(),datePicker.getDayOfMonth());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd日");
-        dateTime = sdf.format(calendar.getTime());
-        ad.setTitle(dateTime);
-        Log.d("556565",dateTime);
-    }
 
     /**
      * 实现将初始日期时间2012年07月02日 16:45 拆分成年 月 日 时 分 秒,并赋值给calendar
@@ -173,5 +146,6 @@ public class DatePickDialogUtil implements OnDateChangedListener,
         }
         return result;
     }
+
 
 }

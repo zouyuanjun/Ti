@@ -52,7 +52,7 @@ public class eventAdapter extends BaseAdapter {
     @Override
     public View getView( final int position, View convertView, ViewGroup parent) {
         databaseHelper=new DatabaseHelper(context);
-        this.position=position;
+        eventAdapter.position =position;
         View view=meventInflater.inflate(R.layout.eventitem,null);
         TextView eventtext=(TextView)view.findViewById(R.id.eventText);
         TextView timetext=(TextView)view.findViewById(R.id.timetext);

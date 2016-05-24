@@ -76,12 +76,6 @@ public class DatePickDialogUtil implements OnDateChangedListener {
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         Data_String=dayOfMonth+"日";
     }
-    public String getDate(){
-        String DATE=null;
-        DATE=this.Data_String;
-        return  DATE;
-    }
-
 
     /**
      * 实现将初始日期时间2012年07月02日 16:45 拆分成年 月 日 时 分 秒,并赋值给calendar

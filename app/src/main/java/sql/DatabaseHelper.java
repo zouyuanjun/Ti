@@ -125,7 +125,8 @@ public  class DatabaseHelper extends SQLiteOpenHelper
             mCursor.close();
             db.close();
                 return eventbeanList;
-            };
+            }
+
         public List getHistory() {
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor mCursor = db.query(DATABASE_TABLE, new String[]{KEY_ROWID, KEY_EVENT, KEY_TIME, KEY_TAG}, null, null, null, null, null, null);
@@ -143,9 +144,7 @@ public  class DatabaseHelper extends SQLiteOpenHelper
             mCursor.close();
             db.close();
             return historybeanList;
-        };
-
-
+        }
 
 
         //retreves a particular contact

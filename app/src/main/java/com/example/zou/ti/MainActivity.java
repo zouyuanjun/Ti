@@ -24,6 +24,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.zou.menu.ActivityAccount;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     DatabaseHelper databaseHelper;
-    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("55555555", "MainActivityOnCreat: ");
@@ -59,6 +60,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ActivityCollector.addActivity(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);//toolbar支持
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int menuItemId = item.getItemId();
+                if(menuItemId==R.id.action_settings){
+                    Intent intent=new Intent(MainActivity.this, ActivityAccount.class);
+                    startActivity(intent);
+
+
+                }else if (menuItemId==R.id.action_note){
+
+
+                }
+                return true;
+            }
+        });
+
         mcreat=(Button)findViewById(R.id.id_button_creat);
         mcreat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-        setSupportActionBar(toolbar);
 
         context=this;
         databaseHelper=new DatabaseHelper(context);
-        db=databaseHelper.getWritableDatabase();
-        db.close();
-
         initView();
         initEvents();
 
@@ -262,10 +277,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
-    private  void refresh(){
-        finish();
-        Intent intent=new Intent(MainActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
 
 }

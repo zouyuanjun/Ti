@@ -11,6 +11,7 @@ import android.widget.EditText;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import AlarmManage.Alarm;
 import sql.DatabaseHelper;
 
 /**
@@ -22,7 +23,7 @@ public class CreatEvent extends Activity{
     private EditText EditDate;
     private EditText EditTime;
     private EditText Content;
-
+    Alarm am=new Alarm();
     private String Content_text;
     private static String datatime;
     private Button button_creat;
@@ -30,7 +31,7 @@ public class CreatEvent extends Activity{
     DatabaseHelper databaseHelper;
     SimpleDateFormat formatter    =   new    SimpleDateFormat    ("yyyy年MM月dd日    HH:mm    ");
     Date curDate    =   new  Date(System.currentTimeMillis());//获取当前时间
-    private String initStartDateTime = formatter.format(curDate);; // 初始化开始时间
+    private String initStartDateTime = formatter.format(curDate); // 初始化开始时间
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,11 +85,14 @@ public class CreatEvent extends Activity{
                 Content_text = Content.getText().toString();
                 Log.d("55555", Content_text);
                 Log.d("55555",datatime);
+                am.AlarmThing(datatime);
                 databaseHelper.insertContact(Content_text, datatime, 0);
                 Intent intent=new Intent(CreatEvent.this,MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
     }
 
 }

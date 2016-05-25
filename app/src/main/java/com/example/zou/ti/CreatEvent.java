@@ -19,7 +19,6 @@ import sql.DatabaseHelper;
  */
 public class CreatEvent extends Activity{
 
-    /** Called when the activity is first created. */
     private EditText EditDate;
     private EditText EditTime;
     private EditText Content;
@@ -85,7 +84,7 @@ public class CreatEvent extends Activity{
                 Content_text = Content.getText().toString();
                 Log.d("55555", Content_text);
                 Log.d("55555",datatime);
-                am.AlarmThing(datatime);
+                am.AlarmThing();
                 databaseHelper.insertContact(Content_text, datatime, 0);
                 Intent intent=new Intent(CreatEvent.this,MainActivity.class);
                 startActivity(intent);

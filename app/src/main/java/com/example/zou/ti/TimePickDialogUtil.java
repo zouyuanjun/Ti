@@ -18,17 +18,18 @@ public class TimePickDialogUtil implements TimePicker.OnTimeChangedListener {
     private TimePicker timePicker;
     private AlertDialog ad;
 
-
-
     private String Time_string="jjjjj";
     private String initDateTime;
     private Activity activity;
+
+    static public long time;
 
     public TimePickDialogUtil(Activity activity, String initDateTime) {
         this.activity = activity;
         this.initDateTime = initDateTime;
 
     }
+
     public AlertDialog dateTimePicKDialog(final EditText inputDate) {
         LinearLayout TimeLayout = (LinearLayout) activity
                 .getLayoutInflater().inflate(R.layout.timepick, null);
@@ -55,11 +56,19 @@ public class TimePickDialogUtil implements TimePicker.OnTimeChangedListener {
         }
 
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+            Calendar mCalendar=Calendar.getInstance();
+            mCalendar.setTimeInMillis(System
+                    .currentTimeMillis());
+            mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCalendar.set(Calendar.MINUTE, minute);
+            mCalendar.set(Calendar.SECOND, 0);
+            mCalendar.set(Calendar.MILLISECOND, 0);
+            time=mCalendar.getTimeInMillis();
             Time_string =hourOfDay+":"+minute;
             ad.setTitle(Time_string);
             Log.d("5555555", Time_string);
+            Log.d("5555555", "time3:"+String.valueOf(time));
         }
-
     public void init( TimePicker timePicker) {
         Calendar calendar = Calendar.getInstance();
         if (!(null == initDateTime || "".equals(initDateTime))) {

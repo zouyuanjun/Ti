@@ -1,8 +1,6 @@
 package com.example.zou.ti;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import sql.DatabaseHelper;
+import com.example.zou.sql.DatabaseHelper;
 
 /**
  * Created by zou on 2016/4/2.

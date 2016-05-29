@@ -10,8 +10,7 @@ import android.widget.EditText;
 
 import com.example.zou.ti.R;
 
-import sql.AccountDBHelper;
-import sql.DatabaseHelper;
+import com.example.zou.sql.AccountDBHelper;
 
 /**
  * Created by zou on 2016/5/24.

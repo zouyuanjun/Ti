@@ -1,4 +1,4 @@
-package sql;
+package com.example.zou.sql;
 
 import android.content.ContentValues;
 import android.content.Context;

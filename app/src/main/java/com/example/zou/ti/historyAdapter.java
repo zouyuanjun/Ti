@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import sql.DatabaseHelper;
+import com.example.zou.sql.DatabaseHelper;
 
 /**
  * Created by zou on 2016/4/2.

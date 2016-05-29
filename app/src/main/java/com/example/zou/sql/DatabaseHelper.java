@@ -1,11 +1,10 @@
-package sql;
+package com.example.zou.sql;
 
 /**
  * Created by zou on 2016/4/4.
  */
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,8 +18,6 @@ import com.example.zou.ti.historyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public  class DatabaseHelper extends SQLiteOpenHelper
     {

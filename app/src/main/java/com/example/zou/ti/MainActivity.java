@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,8 +18,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -29,7 +26,7 @@ import com.example.zou.menu.ActivityAccount;
 import java.util.ArrayList;
 import java.util.List;
 
-import sql.DatabaseHelper;
+import com.example.zou.sql.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private ViewPager mViewpage;
@@ -244,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (keyCode == KeyEvent.KEYCODE_BACK )
         {
             // 创建退出对话框
-            AlertDialog isExit = new AlertDialog.Builder(this).create();
+            AlertDialog isExit = new AlertDialog.Builder(context).create();
             // 设置对话框标题
             isExit.setTitle("提示");
             // 设置对话框消息

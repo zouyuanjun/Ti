@@ -40,6 +40,7 @@ public class CreatEvent extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createvent);
+        ActivityCollector.addActivity(this);
         // 两个输入框
         EditDate = (EditText) findViewById(R.id.editdata);
 //        EditDate.setText(initStartDate);

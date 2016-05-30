@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.zou.ti.ActivityCollector;
 import com.example.zou.ti.R;
 
 /**
@@ -21,6 +22,7 @@ public class Activity_AlarmReceiver extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myreceiver);
+        ActivityCollector.addActivity(this);
         Intent intent=getIntent();
         String msg=intent.getStringExtra("msg");
         long  time=intent.getLongExtra("time",0);
@@ -30,17 +32,16 @@ public class Activity_AlarmReceiver extends Activity{
         alert.setNegativeButton("延迟10分钟", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Activity_AlarmReceiver.this.finish();
             }
         });
-        alert.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Activity_AlarmReceiver.this.finish();
             }
         });
         AlertDialog alertDialog=alert.create();
-//        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alertDialog.show();
         Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
         Log.d("5555555",msg);

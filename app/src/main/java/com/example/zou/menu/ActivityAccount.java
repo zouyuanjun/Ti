@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.zou.ti.ActivityCollector;
 import com.example.zou.ti.R;
 
 /**
@@ -21,6 +22,7 @@ public class ActivityAccount extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        ActivityCollector.addActivity(this);
         mbt_creat_account= (Button) findViewById(R.id.bt_creatAccount);
         mlistview_account= (ListView) findViewById(R.id.id_lv_account);
         mbt_creat_account.setOnClickListener(new View.OnClickListener() {

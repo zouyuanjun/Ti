@@ -26,6 +26,7 @@ import com.example.zou.menu.ActivityAccount;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.zou.menu.Activity_Note;
 import com.example.zou.sql.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -65,11 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(menuItemId==R.id.action_settings){
                     Intent intent=new Intent(MainActivity.this, ActivityAccount.class);
                     startActivity(intent);
-
-
                 }else if (menuItemId==R.id.action_note){
-
-
+                    Intent intent=new Intent(MainActivity.this, Activity_Note.class);
+                    startActivity(intent);
                 }
                 return true;
             }

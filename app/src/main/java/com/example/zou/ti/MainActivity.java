@@ -96,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //初始化点击事件
     private void initEvents() {
 
-        mevent.setOnClickListener(this);
-        mhistory.setOnClickListener(this);
+
         mViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -114,11 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     default:
                         break;
-
                 }
-
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -129,11 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
 
         mViewpage=(ViewPager)findViewById(R.id.id_viewpager);
-        mTabevent=(LinearLayout)findViewById(R.id.id_tab_enent);
-        mTabhistory=(LinearLayout)findViewById(R.id.id_tab_history);
 
-        mevent=(Button)findViewById(R.id.id_button_event);
-        mhistory=(Button)findViewById(R.id.id_button_history);
         //实例化一个LayoutInflater对象
         LayoutInflater mInflate=LayoutInflater.from(this);
         View event=mInflate.inflate(R.layout.event, null);
@@ -219,14 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.id_button_event:
-                mViewpage.setCurrentItem(0);
-                break;
-            case R.id.id_button_history:
-                mViewpage.setCurrentItem(1);
-                break;
-        }
+
     }
 
     @Override

@@ -35,6 +35,7 @@
         <activity android:name="com.example.zou.menu.Activity_CreatAccount"></activity>
         <activity android:name=".CreatEvent"></activity>
         <activity android:name="com.example.zou.alarmmanage.Activity_AlarmReceiver"></activity>
+        <activity android:name="com.example.zou.menu.Activity_Note"></activity>
         <receiver android:name="com.example.zou.ti.MyReceiver"
             android:permission=""
             android:process=":remote" >

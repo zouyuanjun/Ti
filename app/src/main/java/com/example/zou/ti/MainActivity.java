@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewpage;
     private PagerAdapter mAdapter;
     private List<View> mView=new ArrayList<View>();
-    private LinearLayout mTabevent;
-    private LinearLayout mTabhistory;
-    private Button mevent;
-    private Button mhistory;
+
     private Button mcreat;
     private static Context context;
     private static eventAdapter eventAdapter;
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static com.example.zou.ti.eventAdapter getEventAdapter() {
         return eventAdapter;
     }
-
     public static com.example.zou.ti.historyAdapter getHistoryAdapter() {
         return historyAdapter;
     }

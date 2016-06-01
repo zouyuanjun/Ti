@@ -24,14 +24,16 @@ public class Activity_AlarmReceiver extends Activity{
         setContentView(R.layout.activity_myreceiver);
         ActivityCollector.addActivity(this);
         Intent intent=getIntent();
-        String msg=intent.getStringExtra("msg");
-        long  time=intent.getLongExtra("time",0);
+        final String msg=intent.getStringExtra("msg");
+        final long  time=intent.getLongExtra("time",0);
         AlertDialog.Builder alert=new AlertDialog.Builder(this);
         alert.setTitle("提示:");
         alert.setMessage(msg);
         alert.setNegativeButton("延迟10分钟", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Alarm am=new Alarm();
+                am.AlarmThing(time+60*1000*10,msg);
                 Activity_AlarmReceiver.this.finish();
             }
         });
@@ -43,8 +45,7 @@ public class Activity_AlarmReceiver extends Activity{
         });
         AlertDialog alertDialog=alert.create();
         alertDialog.show();
-        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
-        Log.d("5555555",msg);
+
     }
     private void setAlarmParams(Notification notification) {
         //AudioManager provides access to volume and ringer mode control.

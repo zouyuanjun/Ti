@@ -17,6 +17,8 @@ import java.util.Calendar;
 import com.example.zou.alarmmanage.Alarm;
 import com.example.zou.sql.DatabaseHelper;
 import android.app.TimePickerDialog;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 
 /**
@@ -35,6 +37,9 @@ public class CreatEvent extends Activity{
     DatabaseHelper databaseHelper;
     Calendar calendar=Calendar.getInstance();
     TimePickerDialog timePickDialog;
+    private RadioGroup mRadioGroup;
+    private EditText Edit_intervai_time;
+    public  String TGA="0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,8 +48,10 @@ public class CreatEvent extends Activity{
         ActivityCollector.addActivity(this);
         // 两个输入框
         EditDate = (EditText) findViewById(R.id.editdata);
-//        EditDate.setText(initStartDate);
+        Edit_intervai_time= (EditText) findViewById(R.id.ed_interval_time);
         EditTime= (EditText) findViewById(R.id.edittime);
+
+        mRadioGroup= (RadioGroup) findViewById(R.id.radioGroup);
 
         Content = (EditText) findViewById(R.id.editcontent);
         databaseHelper=new DatabaseHelper(this);
@@ -118,16 +125,23 @@ public class CreatEvent extends Activity{
                 Content_text = Content.getText().toString();
 
                 long time=calendar.getTimeInMillis();
-
-                Log.d("5555555", "time3:"+String.valueOf(time));
-                am.AlarmThing(time,Content_text);
+                long start_time=time;
+                Log.d("5555555", "time3:"+String.valueOf(start_time));
+                am.AlarmThing(time,start_time,Content_text,TGA);
                 databaseHelper.insertContact(Content_text, datatime, 0);
                 Intent intent=new Intent(CreatEvent.this,MainActivity.class);
                 startActivity(intent);
             }
         });
+                mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                  @Override
+                 public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-
+                      RadioButton rb = (RadioButton)CreatEvent.this.findViewById(checkedId);
+                      TGA=rb.getText().toString();
+                      Log.d("554444",TGA+"7777777777777");
+                      Edit_intervai_time.setText(TGA);
+                 }
+        });
     }
-
 }

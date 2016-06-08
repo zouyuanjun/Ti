@@ -26,16 +26,14 @@ import com.example.zou.menu.ActivityAccount;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.zou.menu.Activity_Note;
 import com.example.zou.sql.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private ViewPager mViewpage;
     private PagerAdapter mAdapter;
     private List<View> mView=new ArrayList<View>();
-    private LinearLayout mTabevent;
-    private LinearLayout mTabhistory;
-    private Button mevent;
-    private Button mhistory;
+
     private Button mcreat;
     private static Context context;
     private static eventAdapter eventAdapter;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static com.example.zou.ti.eventAdapter getEventAdapter() {
         return eventAdapter;
     }
-
     public static com.example.zou.ti.historyAdapter getHistoryAdapter() {
         return historyAdapter;
     }
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("55555555", "MainActivityOnCreat: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCollector.addActivity(this);
@@ -65,11 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(menuItemId==R.id.action_settings){
                     Intent intent=new Intent(MainActivity.this, ActivityAccount.class);
                     startActivity(intent);
-
-
                 }else if (menuItemId==R.id.action_note){
-
-
+                    Intent intent=new Intent(MainActivity.this, Activity_Note.class);
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -97,8 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //初始化点击事件
     private void initEvents() {
 
-        mevent.setOnClickListener(this);
-        mhistory.setOnClickListener(this);
+
         mViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -115,11 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     default:
                         break;
-
                 }
-
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -130,11 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
 
         mViewpage=(ViewPager)findViewById(R.id.id_viewpager);
-        mTabevent=(LinearLayout)findViewById(R.id.id_tab_enent);
-        mTabhistory=(LinearLayout)findViewById(R.id.id_tab_history);
 
-        mevent=(Button)findViewById(R.id.id_button_event);
-        mhistory=(Button)findViewById(R.id.id_button_history);
         //实例化一个LayoutInflater对象
         LayoutInflater mInflate=LayoutInflater.from(this);
         View event=mInflate.inflate(R.layout.event, null);
@@ -220,14 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.id_button_event:
-                mViewpage.setCurrentItem(0);
-                break;
-            case R.id.id_button_history:
-                mViewpage.setCurrentItem(1);
-                break;
-        }
+
     }
 
     @Override

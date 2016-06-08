@@ -25,6 +25,7 @@ public class Alarm {
         Calendar calendar=Calendar.getInstance();
         long time_began=calendar.getTimeInMillis();
         long diff=time-time_began;
+        int requestCode=(int)start_time/1;
         AlarmManager aManager = (AlarmManager) mcontext.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent("MYALARMRECEIVER");
         intent.putExtra("tga",TGA);
@@ -37,8 +38,10 @@ public class Alarm {
         if (days!=0) time_diff=days+"天"+hours +"小时"+minutes+"分钟";
             else if (hours!=0) time_diff=hours +"小时"+minutes+"分钟";
                 else time_diff=minutes+"分钟";
-        PendingIntent pi = PendingIntent.getBroadcast(mcontext,0,intent,0);
+        PendingIntent pi = PendingIntent.getBroadcast(mcontext,requestCode,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         aManager.set(AlarmManager.RTC_WAKEUP, time,pi);
+        Log.d("555555555","time1:"+String.valueOf(time)+"设置时间");
+        Log.d("5555555555",TGA+"设置闹钟时TGA");
         Toast.makeText(mcontext,"将在"+time_diff+"后提醒",Toast.LENGTH_LONG).show();
 
     }

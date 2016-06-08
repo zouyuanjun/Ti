@@ -2,10 +2,12 @@ package com.example.zou.ti;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import android.widget.DatePicker;
@@ -48,6 +50,9 @@ public class CreatEvent extends Activity{
         ActivityCollector.addActivity(this);
         // 两个输入框
         EditDate = (EditText) findViewById(R.id.editdata);
+
+//隐藏Edit输入法窗口
+
         Edit_intervai_time= (EditText) findViewById(R.id.ed_interval_time);
         EditTime= (EditText) findViewById(R.id.edittime);
 
@@ -66,14 +71,13 @@ public class CreatEvent extends Activity{
             }
         });
         calendar.setTimeInMillis(System.currentTimeMillis());
-        long time2=calendar.getTimeInMillis();
 
-        Log.d("5555555", "time1:"+String.valueOf(time2));
         EditTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-
+                    InputMethodManager imm = (InputMethodManager)getSystemService(CreatEvent.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(EditTime.getWindowToken(),0);
                     int hour=calendar.get(Calendar.HOUR_OF_DAY);
                     int minute=calendar.get(Calendar.MINUTE);
                     timePickDialog=new TimePickerDialog(CreatEvent.this,
@@ -101,6 +105,8 @@ public class CreatEvent extends Activity{
             public void onFocusChange(View v, boolean hasFocus) {
 
                 if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(CreatEvent.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(EditDate.getWindowToken(),0);
                     final int Year=calendar.get(Calendar.YEAR);
                     final int Mouth=calendar.get(Calendar.MONTH);
                     int Day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -126,8 +132,8 @@ public class CreatEvent extends Activity{
 
                 long time=calendar.getTimeInMillis();
                 long start_time=time;
-                Log.d("5555555", "time3:"+String.valueOf(start_time));
                 am.AlarmThing(time,start_time,Content_text,TGA);
+                Log.d("5555555555",TGA+"创建时TGA");
                 databaseHelper.insertContact(Content_text, datatime, 0);
                 Intent intent=new Intent(CreatEvent.this,MainActivity.class);
                 startActivity(intent);
@@ -139,7 +145,6 @@ public class CreatEvent extends Activity{
 
                       RadioButton rb = (RadioButton)CreatEvent.this.findViewById(checkedId);
                       TGA=rb.getText().toString();
-                      Log.d("554444",TGA+"7777777777777");
                       Edit_intervai_time.setText(TGA);
                  }
         });

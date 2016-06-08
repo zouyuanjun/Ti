@@ -69,7 +69,6 @@ public  class DatabaseHelper extends SQLiteOpenHelper
 
         public long insertContact(String event, String time,int tag)
         {
-            Log.i("555555555", "insertContact");
 
             SQLiteDatabase db=this.getWritableDatabase();
             ContentValues initialValues = new ContentValues();
@@ -90,7 +89,6 @@ public  class DatabaseHelper extends SQLiteOpenHelper
             updataValues.put(KEY_TAG, tag);
             db.update(DATABASE_TABLE, updataValues, "_id=?", whereArgs);
             updataValues.clear();
-            Log.d("55555555555", "updata");
             eventAdapter.refresheventList();
             eventAdapter.notifyDataSetChanged();
             historyAdapter.refreshhistorylist();
@@ -113,7 +111,6 @@ public  class DatabaseHelper extends SQLiteOpenHelper
                 String time = mCursor.getString(mCursor.getColumnIndex("time"));
                 int tag = mCursor.getInt(mCursor.getColumnIndex("tag"));
                 int ID=mCursor.getInt(mCursor.getColumnIndex("_id"));
-                    Log.d("55555555555",String.valueOf(ID)+"getallcontacts");
                 if (tag==0) {
                     eventbeanList.add(new eventbean(false, event, time, ID));
                     }
@@ -135,7 +132,7 @@ public  class DatabaseHelper extends SQLiteOpenHelper
                     int ID=mCursor.getInt(mCursor.getColumnIndex("_id"));
                     if (tag==1) {
                         historybeanList.add(new eventbean(true, event, time,ID));
-                        Log.i("55555555", "getHistory");}
+                       }
                 }
             }
             mCursor.close();

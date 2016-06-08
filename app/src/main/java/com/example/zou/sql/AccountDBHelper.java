@@ -39,7 +39,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            Log.i("55555555","ONCreat");
             db.execSQL(DATABASE_CREATE);
         }
         catch(SQLException e)
@@ -79,7 +78,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
                 String account = mCursor.getString(mCursor.getColumnIndex("account"));
                 String password= mCursor.getString(mCursor.getColumnIndex("password"));
                 int ID=mCursor.getInt(mCursor.getColumnIndex("_id"));
-                Log.d("55555555555",String.valueOf(ID)+"getallcontacts");
                 account_beanList.add(new Account_bean(account_name,account, password,ID));
 
             }

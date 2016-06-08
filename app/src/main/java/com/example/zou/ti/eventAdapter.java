@@ -76,7 +76,6 @@ public class eventAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Log.d("55555", "Chackbox  Click" + String.valueOf(ID));
                     databaseHelper.updata(ID, event, time, 1);
                 }
             }

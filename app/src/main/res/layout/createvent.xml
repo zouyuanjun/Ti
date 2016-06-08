@@ -72,6 +72,12 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/radioButton" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="15 分钟"
             android:id="@+id/radioButton1" />
 
@@ -108,9 +114,8 @@
         android:layout_height="wrap_content"
         android:text="选择间隔时间"
         android:id="@+id/textView4"
-        android:layout_alignTop="@+id/radioGroup"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

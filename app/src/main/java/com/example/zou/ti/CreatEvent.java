@@ -2,10 +2,12 @@ package com.example.zou.ti;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import android.widget.DatePicker;
@@ -17,6 +19,9 @@ import java.util.Calendar;
 import com.example.zou.alarmmanage.Alarm;
 import com.example.zou.sql.DatabaseHelper;
 import android.app.TimePickerDialog;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 
 /**
@@ -35,15 +40,25 @@ public class CreatEvent extends Activity{
     DatabaseHelper databaseHelper;
     Calendar calendar=Calendar.getInstance();
     TimePickerDialog timePickDialog;
+    private RadioGroup mRadioGroup;
+    private EditText Edit_intervai_time;
+    public  String TGA="0";
+    private ImageButton imageButton_help;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createvent);
+        ActivityCollector.addActivity(this);
         // 两个输入框
         EditDate = (EditText) findViewById(R.id.editdata);
-//        EditDate.setText(initStartDate);
+
+//隐藏Edit输入法窗口
+
+        Edit_intervai_time= (EditText) findViewById(R.id.ed_interval_time);
         EditTime= (EditText) findViewById(R.id.edittime);
+
+        mRadioGroup= (RadioGroup) findViewById(R.id.radioGroup);
 
         Content = (EditText) findViewById(R.id.editcontent);
         databaseHelper=new DatabaseHelper(this);
@@ -58,14 +73,13 @@ public class CreatEvent extends Activity{
             }
         });
         calendar.setTimeInMillis(System.currentTimeMillis());
-        long time2=calendar.getTimeInMillis();
 
-        Log.d("5555555", "time1:"+String.valueOf(time2));
         EditTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-
+                    InputMethodManager imm = (InputMethodManager)getSystemService(CreatEvent.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(EditTime.getWindowToken(),0);
                     int hour=calendar.get(Calendar.HOUR_OF_DAY);
                     int minute=calendar.get(Calendar.MINUTE);
                     timePickDialog=new TimePickerDialog(CreatEvent.this,
@@ -93,6 +107,8 @@ public class CreatEvent extends Activity{
             public void onFocusChange(View v, boolean hasFocus) {
 
                 if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(CreatEvent.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(EditDate.getWindowToken(),0);
                     final int Year=calendar.get(Calendar.YEAR);
                     final int Mouth=calendar.get(Calendar.MONTH);
                     int Day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -117,16 +133,30 @@ public class CreatEvent extends Activity{
                 Content_text = Content.getText().toString();
 
                 long time=calendar.getTimeInMillis();
-
-                Log.d("5555555", "time3:"+String.valueOf(time));
-                am.AlarmThing(time,Content_text);
+                long start_time=time;
+                am.AlarmThing(time,start_time,Content_text,TGA);
+                Log.d("5555555555",TGA+"创建时TGA");
                 databaseHelper.insertContact(Content_text, datatime, 0);
                 Intent intent=new Intent(CreatEvent.this,MainActivity.class);
                 startActivity(intent);
             }
         });
+                mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                  @Override
+                 public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-
+                      RadioButton rb = (RadioButton)CreatEvent.this.findViewById(checkedId);
+                      TGA=rb.getText().toString();
+                      Edit_intervai_time.setText(TGA);
+                 }
+        });
+        imageButton_help= (ImageButton) findViewById(R.id.ivan_createvent_help);
+        imageButton_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CreatEvent.this,Activiy_CreatEvent_Help.class);
+                startActivity(intent);
+            }
+        });
     }
-
 }

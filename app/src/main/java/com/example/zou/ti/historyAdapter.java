@@ -48,14 +48,29 @@ public class historyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view=meventInflater.inflate(R.layout.eventitem,null);
-        TextView eventtext=(TextView)view.findViewById(R.id.eventText);
-        TextView timetext=(TextView)view.findViewById(R.id.timetext);
-        CheckBox checkBox=(CheckBox)view.findViewById(R.id.id_checkBox);
+        ViewHolder viewHolder=null;
+        if (null==viewHolder) {
+            viewHolder = new ViewHolder();
+
+            convertView = meventInflater.inflate(R.layout.eventitem, null);
+            viewHolder.eventtext = (TextView) convertView.findViewById(R.id.eventText);
+            viewHolder.timetext = (TextView) convertView.findViewById(R.id.timetext);
+            viewHolder. checkBox = (CheckBox) convertView.findViewById(R.id.id_checkBox);
+            convertView.setTag(viewHolder);
+        }
+        else {
+            viewHolder=(ViewHolder)convertView.getTag();
+        }
         eventbean bean= mhistoryList.get(position);
-        eventtext.setText(bean.event);
-        timetext.setText(bean.time);
-        checkBox.setChecked(true);
-        return view;
+        viewHolder.eventtext.setText(bean.event);
+        viewHolder.timetext.setText(bean.time);
+        viewHolder.checkBox.setChecked(true);
+        return convertView;
+    }
+    private  static class ViewHolder{
+        TextView eventtext;
+        TextView timetext;
+        CheckBox checkBox;
+
     }
 }

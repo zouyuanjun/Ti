@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.zou.ti.ActivityCollector;
 import com.example.zou.ti.R;
 
 import com.example.zou.sql.AccountDBHelper;
@@ -32,7 +33,7 @@ public class Activity_CreatAccount extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_account);
-
+        ActivityCollector.addActivity(this);
         creat_account_dbHelper=new AccountDBHelper(this);
         account_name= (EditText) findViewById(R.id.ed_account_name);
         account= (EditText) findViewById(R.id.ed_account);

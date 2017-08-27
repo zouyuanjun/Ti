@@ -49,30 +49,44 @@ public class eventAdapter extends BaseAdapter {
 
     @Override
     public View getView( final int position, View convertView, ViewGroup parent) {
-        databaseHelper=new DatabaseHelper(context);
-        eventAdapter.position =position;
-        View view=meventInflater.inflate(R.layout.eventitem,null);
-        TextView eventtext=(TextView)view.findViewById(R.id.eventText);
-        TextView timetext=(TextView)view.findViewById(R.id.timetext);
-        CheckBox checkBox=(CheckBox)view.findViewById(R.id.id_checkBox);
+        ViewHolder viewHolder=null;
+        if (null==convertView) {
+            viewHolder = new ViewHolder();
+            databaseHelper = new DatabaseHelper(context);
+            eventAdapter.position = position;
+            convertView = meventInflater.inflate(R.layout.eventitem, null);
+            viewHolder.eventtext = (TextView) convertView.findViewById(R.id.eventText);
+            viewHolder.timetext = (TextView) convertView.findViewById(R.id.timetext);
+            viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.id_checkBox);
+            convertView.setTag(viewHolder);
+        }
+        else
+        {
+            viewHolder=(ViewHolder)convertView.getTag();
+        }
         eventbean bean=meventList.get(position);
         final String event=bean.event;
         final String time=bean.time;
         boolean tag=bean.over;
         final int ID=bean.ID;
-        eventtext.setText(event);
-        timetext.setText(time);
-        checkBox.setChecked(tag);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.eventtext.setText(event);
+        viewHolder.timetext.setText(time);
+        viewHolder.checkBox.setChecked(tag);
+        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Log.d("55555", "Chackbox  Click" + String.valueOf(ID));
                     databaseHelper.updata(ID, event, time, 1);
                 }
             }
         });
 
-        return view;
+        return convertView;
+    }
+    private  static class ViewHolder{
+        TextView eventtext;
+        TextView timetext;
+        CheckBox checkBox;
+
     }
 }

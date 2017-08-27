@@ -144,9 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         historyAdapter=new historyAdapter(this);
         historytListView.setAdapter(historyAdapter);
 
-
-
-
         mView.add(event);
         mView.add(history);
 

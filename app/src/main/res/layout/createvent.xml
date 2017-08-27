@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ed_interval_time"
-        android:hint="输入自定义时间间隔"
+        android:hint="输入自定义时间间隔数字，单位分钟"
         android:inputType="number"
         android:layout_below="@+id/radioGroup"
         android:layout_alignParentStart="true" />
@@ -116,6 +116,14 @@
         android:id="@+id/textView4"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivan_createvent_help"
+      android:background="@drawable/help"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

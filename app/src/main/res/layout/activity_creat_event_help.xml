@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/background_material_dark"
+        android:text="     选择了时间间隔将创建一个每天提醒的任务，比如设置时创建的时间为12点，设置时间间隔为15分钟，那么将在以后每天的12点响闹钟，闹钟响起时可选“延迟15分钟，今日完成，取消提醒”三个选项。
+        延迟15分钟：将在下一个15分钟，即12：15再次响铃。
+
+        今日完成：今天将不再提醒，明天将会再次在12点响铃。
+
+        结束：以后都不会再响了。
+
+        选择0分钟或者不选，将创建一个只提醒一次的普通闹铃。
+
+        遇到问题欢迎反馈。
+        TEL:18702508050
+     QQ：854380042"
+        android:id="@+id/textView5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:padding="20dp"/>
+</RelativeLayout>
+
+</LinearLayout>

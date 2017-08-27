@@ -19,6 +19,7 @@ import java.util.Calendar;
 import com.example.zou.alarmmanage.Alarm;
 import com.example.zou.sql.DatabaseHelper;
 import android.app.TimePickerDialog;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
@@ -42,6 +43,7 @@ public class CreatEvent extends Activity{
     private RadioGroup mRadioGroup;
     private EditText Edit_intervai_time;
     public  String TGA="0";
+    private ImageButton imageButton_help;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,14 @@ public class CreatEvent extends Activity{
                       TGA=rb.getText().toString();
                       Edit_intervai_time.setText(TGA);
                  }
+        });
+        imageButton_help= (ImageButton) findViewById(R.id.ivan_createvent_help);
+        imageButton_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CreatEvent.this,Activiy_CreatEvent_Help.class);
+                startActivity(intent);
+            }
         });
     }
 }

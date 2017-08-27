@@ -8,8 +8,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.zou.ti.ActivityCollector;
 import com.example.zou.ti.R;
@@ -25,22 +33,31 @@ public class Activity_AlarmReceiver extends Activity{
     private String msg;
     private long  time;
     private long  start_time;
+    PowerManager pm = null;
+    PowerManager.WakeLock mWakelock = null;
+    MediaPlayer mMediaPlayer = null;
+    Vibrator vibrator = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Window win = getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakelock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK,
+                "AlarmActivity");
+        mWakelock.setReferenceCounted(false);
+        mWakelock.acquire();
+        playRingtone();
+
         setContentView(R.layout.activity_myreceiver);
         ActivityCollector.addActivity(this);
         Intent intent = getIntent();
         tga = intent.getStringExtra("tga");
         msg = intent.getStringExtra("msg");
-        Log.d("555555", tga + "接收时TGA" + msg);
         time = intent.getLongExtra("time", 0);
-        Log.d("5555555","interval:"+String.valueOf(time)+"原始时间");
         start_time = intent.getLongExtra("start_time", 0);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification nt = new Notification();
-        setAlarmParams(nt);
-
         if (tga.equals("0")) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("提示:");
@@ -95,25 +112,73 @@ public class Activity_AlarmReceiver extends Activity{
         AlertDialog alertDialog = interval_alert.create();
         alertDialog.show();
     }
-    private void setAlarmParams(Notification notification) {
-        //AudioManager provides access to volume and ringer mode control.
-        AudioManager volMgr = (AudioManager) Activity_AlarmReceiver.this.getSystemService(Context.AUDIO_SERVICE);
-        switch (volMgr.getRingerMode()) {//获取系统设置的铃声模式
-            case AudioManager.RINGER_MODE_SILENT://静音模式，值为0，这时候不震动，不响铃
-                notification.sound = null;
-                notification.vibrate = null;
-                break;
-            case AudioManager.RINGER_MODE_VIBRATE://震动模式，值为1，这时候震动，不响铃
-                notification.sound = null;
-                notification.defaults |= Notification.DEFAULT_VIBRATE;
-                break;
-            case AudioManager.RINGER_MODE_NORMAL://常规模式，值为2，分两种情况：1_响铃但不震动，2_响铃+震动
-                Log.d("5555","常规模式响铃");
-                notification.defaults |= Notification.DEFAULT_SOUND;
-                notification.defaults |= Notification.DEFAULT_VIBRATE;
-                break;
-            default:
-                break;
+
+    public void playRingtone()
+    {
+        try
+        {
+            Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setDataSource(Activity_AlarmReceiver.this, alert);
+            // final AudioManager audioManager = (AudioManager)
+            // mContext.getSystemService(Context.AUDIO_SERVICE);
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
+            mMediaPlayer.setLooping(true);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+            long[] pattern =
+                    { 800, 150, 400, 130 }; // OFF/ON/OFF/ON...
+            vibrator.vibrate(pattern, 2);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
+    @Override
+    protected void onDestroy()
+    {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+
+        mWakelock.release();
+        try
+        {
+            if (this.mMediaPlayer != null)
+            {
+                if (this.mMediaPlayer.isPlaying())
+                {
+                    this.mMediaPlayer.stop();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            if (null != vibrator)
+            {
+                vibrator.cancel();
+                vibrator = null;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 }

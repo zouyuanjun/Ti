@@ -116,7 +116,7 @@ public  class DatabaseHelper extends SQLiteOpenHelper
                     }
                 }
             }
-            mCursor.close();
+            mCursor.close();;
             db.close();
                 return eventbeanList;
             }

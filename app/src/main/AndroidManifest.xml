@@ -31,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activiy_CreatEvent_Help"></activity>
         <activity android:name="com.example.zou.menu.ActivityAccount"></activity>
         <activity android:name="com.example.zou.menu.Activity_CreatAccount"></activity>
         <activity android:name=".CreatEvent"
